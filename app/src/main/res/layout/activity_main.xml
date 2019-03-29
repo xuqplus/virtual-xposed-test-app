@@ -18,4 +18,11 @@
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:text="1号按钮" />
+    <Button
+        android:id="@+id/button_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="打开第2个activity" />
 </LinearLayout>
