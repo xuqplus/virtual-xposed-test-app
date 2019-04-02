@@ -38,41 +38,55 @@ public class Main3Activity extends AppCompatActivity {
 
     private void onclick0(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
-
-        final SyncHttpClient client = new SyncHttpClient();
-        final String url = String.format("http://106.12.80.76:8090/");
-        client.get(url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                final String r = new String(responseBody);
-                Log.i("xposed yigetestapp", String.format("onSuccess r=%s", r));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                final String r = new String(responseBody);
-                Log.i("xposed yigetestapp", String.format("onFailure r=%s", r));
-            }
-        });
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final SyncHttpClient client = new SyncHttpClient();
+                    final String url = String.format("http://106.12.80.76:8090/");
+                    client.get(url, new AAA());
+                }
+            }).start();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     private void onclick1(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final SyncHttpClient client = new SyncHttpClient();
+                    final String url = String.format("https://www.aliyun.com/");
+                    client.get(url, new AAA());
+                }
+            }).start();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
 
-        final SyncHttpClient client = new SyncHttpClient();
-        final String url = String.format("https://www.baidu.com");
-        client.get(url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+    public static class AAA extends AsyncHttpResponseHandler {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            try {
                 final String r = new String(responseBody);
-                Log.i("xposed yigetestapp", String.format("onSuccess r=%s", r));
+                Log.i("xposed yigetestapp", String.format("AAA onSuccess url=%s", r));
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
             }
+        }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+        @Override
+        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            try {
                 final String r = new String(responseBody);
-                Log.i("xposed yigetestapp", String.format("onFailure r=%s", r));
+                Log.i("xposed yigetestapp", String.format("AAA onFailure url=%s", r));
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
             }
-        });
+        }
     }
 }
